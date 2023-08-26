@@ -14,7 +14,8 @@ function AppContent() {
     >
       {[...Array(9)].map((_, i) => (
         <Card
-          className="mt-9"
+          key={i}
+          className="mt-3"
           title={`Title #${i}`}
           description="Super description of how to use this shit"
         >
