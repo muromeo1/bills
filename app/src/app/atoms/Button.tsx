@@ -5,14 +5,17 @@ interface ButtonProps {
   color: ButtonBaseProps["color"];
   label: string;
   icon?: string;
+  fullWidth?: ButtonBaseProps["fullWidth"];
+  onClick?: () => void;
 }
 
-function Button({ color, label, icon }: ButtonProps) {
+function Button({ color, label, icon, fullWidth, onClick }: ButtonProps) {
   return (
     <ButtonMUI
-      color={color}
       variant="contained"
-      style={{ borderRadius: "35px" }}
+      color={color}
+      fullWidth={fullWidth}
+      onClick={onClick}
     >
       {icon}
       {label}

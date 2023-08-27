@@ -1,8 +1,15 @@
 import { Grid } from "@mui/material";
 import Card from "../molecules/Card";
 import Button from "../atoms/Button";
+import { useState } from "react";
 
 function AppContent() {
+  const [paid, setPaid] = useState(false);
+
+  const onButtonClick = () => {
+    setPaid(!paid);
+  };
+
   return (
     <Grid
       container
@@ -15,11 +22,16 @@ function AppContent() {
       {[...Array(9)].map((_, i) => (
         <Card
           key={i}
-          className="mt-3"
+          className="mt-7"
           title={`Title #${i}`}
           description="Super description of how to use this shit"
         >
-          <Button color="primary" label="Damn son" />
+          <Button
+            color={paid ? "success" : "warning"}
+            label={paid ? "Pago" : "Pendente"}
+            fullWidth={true}
+            onClick={onButtonClick}
+          />
         </Card>
       ))}
     </Grid>
