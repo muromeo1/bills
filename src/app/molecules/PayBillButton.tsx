@@ -13,7 +13,10 @@ const PayBillButton = ({ bill, fetchData }: PayBillButtonProps) => {
   const [paid, setPaid] = useState(!!bill.paid_on);
 
   const label = paid ? "Pago" : "Pendente";
-  const color = paid ? "green" : "amber";
+
+  const color = paid
+    ? "bg-green-200 hover:bg-green-300 active:bg-green-400"
+    : "bg-amber-200 hover:bg-amber-300 active:bg-amber-400";
 
   const onClick = (id: number, paid: boolean) => {
     axios
@@ -35,12 +38,12 @@ const PayBillButton = ({ bill, fetchData }: PayBillButtonProps) => {
     <button
       onClick={() => onClick(bill.id, !paid)}
       className={cn(
-        `bg-${color}-200 hover:bg-${color}-300 active:bg-${color}-400`,
         "w-full h-12 bottom-0 cursor-pointer",
-        "absolute rounded-b-xl border-0"
+        "absolute rounded-b-xl border-0",
+        color
       )}
     >
-      <div className={`text-md text-${color}-900`}>{label}</div>
+      <div className="text-md text-black">{label}</div>
     </button>
   );
 };
