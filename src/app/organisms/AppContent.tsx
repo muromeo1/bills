@@ -1,36 +1,20 @@
-import { Grid } from "@mui/material";
-import Card from "../molecules/Card";
-import Button from "../atoms/Button";
-import { useState, useEffect } from "react";
+import { BillType, routes } from "../api/bills/route";
+import { capitalize } from "lodash";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { BillType } from "../api/bills/route";
 
-function AppContent() {
-  const [data, setData] = useState<BillType[]>([]);
+import Grid from "../atoms/Grid";
+import Card from "../atoms/Card";
+import PayBillButton from "../molecules/PayBillButton";
 
-  const fetchData = async () => {
+const AppContent = () => {
+  const [data, setData] = useState([]);
+
+  const fetchData = () => {
     axios
-      .get("/api/bills")
+      .get(routes.GET, { headers: { "Content-Type": "application/json" } })
       .then((res) => {
         setData(res.data);
-      })
-      .catch((err) => {
-        console.log("ERROR", err);
-      });
-  };
-
-  const onButtonClick = (id: number, paid: boolean) => {
-    axios
-      .post(
-        "/api/bills/",
-        { id: id, paid: !paid },
-        { headers: { "Content-Type": "application/json" } }
-      )
-      .then(() => {
-        fetchData();
-      })
-      .catch((err) => {
-        console.log("ERROR", err);
       });
   };
 
@@ -38,29 +22,37 @@ function AppContent() {
     fetchData();
   }, []);
 
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+
+  const paidOn = (paidOn: string) => {
+    if (!paidOn) return "-";
+
+    return paidOn;
+  };
+
+  if (!data) return null;
+
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="space-around"
-      alignItems="center"
-      pt={5}
-      px={{ sm: 5, md: 50 }}
-    >
-      {[...data].map((bill) => (
-        <Card key={bill.id} className="mt-7" title={bill.title} bill={bill}>
-          <Button
-            color={bill.paid_on ? "success" : "warning"}
-            label={bill.paid_on ? "Pago" : "Pagar"}
-            fullWidth={true}
-            onClick={() => {
-              onButtonClick(bill.id, !!bill.paid_on);
-            }}
-          />
+    <Grid className="bg-gray-900">
+      {data?.map((bill: BillType) => (
+        <Card key={bill.id}>
+          <Card.Header>{bill.title}</Card.Header>
+          <Card.Body>
+            <Card.Item title="Pagador" content={capitalize(bill.who)} />
+            <Card.Item
+              title="Vence em"
+              content={`${bill.due_to}/${currentMonth}`}
+            />
+            <Card.Item title="Valor" content={`R$ ${bill.value}`} />
+            <Card.Item title="Pago em" content={paidOn(bill.paid_on)} />
+          </Card.Body>
+
+          <PayBillButton bill={bill} fetchData={fetchData} />
         </Card>
       ))}
     </Grid>
   );
-}
+};
 
 export default AppContent;
