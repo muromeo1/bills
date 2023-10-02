@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import path from "path";
-import { promises as fs } from "fs";
+import { promises as fs, writeFileSync } from "fs";
 
 export type BillType = {
 	id: number;
@@ -11,7 +11,7 @@ export type BillType = {
 	paid_on: string;
 };
 
-const filePath = path.join(process.cwd(), "/tmp/bills.json");
+const filePath = path.join(process.cwd(), "bills.json");
 
 const bills = async () => {
 	const buffer = await fs.readFile(filePath);
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
 		}
 	});
 
-	fs.writeFile(filePath, JSON.stringify(billsList, null, 2));
+	writeFileSync(filePath, JSON.stringify(billsList, null, 2));
 
 	return NextResponse.json({ success: true });
 }
