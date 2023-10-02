@@ -11,7 +11,7 @@ export type BillType = {
 	paid_on: string;
 };
 
-const filePath = path.join(process.cwd(), "bills.json");
+const filePath = path.join(process.cwd(), "/tmp/bills.json");
 
 const bills = async () => {
 	const buffer = await fs.readFile(filePath);
