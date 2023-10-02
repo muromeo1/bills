@@ -2,7 +2,7 @@ import { useState } from "react";
 import cn from "classnames";
 import axios from "axios";
 
-import { BillType, routes } from "../api/bills/route";
+import { BillType } from "../api/bills/route";
 
 interface PayBillButtonProps {
   bill: BillType;
@@ -21,7 +21,7 @@ const PayBillButton = ({ bill, fetchData }: PayBillButtonProps) => {
   const onClick = (id: number, paid: boolean) => {
     axios
       .post(
-        routes.POST,
+        "/api/bills",
         { id: id, paid: paid },
         { headers: { "Content-Type": "application/json" } }
       )

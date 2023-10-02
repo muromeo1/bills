@@ -1,4 +1,4 @@
-import { BillType, routes } from "../api/bills/route";
+import { BillType } from "../api/bills/route";
 import { capitalize } from "lodash";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -12,7 +12,7 @@ const AppContent = () => {
 
   const fetchData = () => {
     axios
-      .get(routes.GET, { headers: { "Content-Type": "application/json" } })
+      .get("/api/bills", { headers: { "Content-Type": "application/json" } })
       .then((res) => {
         setData(res.data);
       });

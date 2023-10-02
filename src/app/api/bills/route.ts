@@ -11,11 +11,6 @@ export type BillType = {
 	paid_on: string;
 };
 
-export const routes = {
-	GET: "/api/bills",
-	POST: "/api/bills",
-};
-
 const filePath = path.join(process.cwd(), "bills.json");
 
 const bills = async () => {
