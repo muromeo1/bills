@@ -22,7 +22,7 @@ const Header = ({ children }: CardProps) => {
 
 const Body = ({ children }: CardProps) => {
   return (
-    <div className="h-[19vh] mb-12 w-full grid grid-cols-2 text-center items-center">
+    <div className="h-full my-5 w-full grid grid-cols-2 text-center items-center">
       {children}
     </div>
   );
