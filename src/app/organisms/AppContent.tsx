@@ -34,7 +34,7 @@ const AppContent = () => {
   if (!data) return null;
 
   return (
-    <Grid className="bg-gray-900">
+    <Grid>
       {data?.map((bill: BillType) => (
         <Card key={bill.id}>
           <Card.Header>{bill.title}</Card.Header>
