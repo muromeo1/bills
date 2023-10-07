@@ -38,7 +38,7 @@ const PayBillButton = ({ bill, fetchData }: PayBillButtonProps) => {
     <button
       onClick={() => onClick(bill.id, !paid)}
       className={cn(
-        "w-full h-[11vh] bottom-0 cursor-pointer",
+        "w-full md:h-[13vh] h-[15vh] bottom-0 cursor-pointer",
         "rounded-b-xl border-0",
         color
       )}
